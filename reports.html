@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reports & Analytics · LendFlow</title>
+<meta name="description" content="Portfolio performance and lending insights.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <div class="brand-mark">LF</div>
+        <div class="brand-text">LEND<span>FLOW</span></div>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-section-label">MAIN</div>
+          <a href="index.html" class="nav-link"><i class="bi bi-speedometer2"></i><span>Dashboard</span></a>
+        <div class="nav-section-label">MANAGEMENT</div>
+          <a href="borrowers.html" class="nav-link"><i class="bi bi-people"></i><span>Borrowers</span></a>
+          <a href="applications.html" class="nav-link"><i class="bi bi-file-earmark-text"></i><span>Loan Applications</span></a>
+          <a href="loans.html" class="nav-link"><i class="bi bi-cash-coin"></i><span>Active Loans</span></a>
+          <a href="repayments.html" class="nav-link"><i class="bi bi-receipt"></i><span>Repayments</span></a>
+        <div class="nav-section-label">FINANCE</div>
+          <a href="transactions.html" class="nav-link"><i class="bi bi-arrow-left-right"></i><span>Transactions</span></a>
+          <a href="reports.html" class="nav-link"><i class="bi bi-bar-chart-line"></i><span>Reports</span></a>
+        <div class="nav-section-label">SYSTEM</div>
+          <a href="settings.html" class="nav-link"><i class="bi bi-gear"></i><span>Settings</span></a>
+      </nav>
+      <div class="sidebar-footer">
+        <div class="avatar">AU</div>
+        <div class="who">
+          <div class="name">Admin User</div>
+          <div class="role">Administrator</div>
+        </div>
+        <button class="logout-btn" title="Log out" aria-label="Log out"><i class="bi bi-box-arrow-right"></i></button>
+      </div>
+    </aside>
+    <div class="sidebar-overlay" data-menu-toggle></div>
+    <div class="main-area">
+    <header class="topbar">
+      <button class="menu-toggle" data-menu-toggle aria-label="Toggle menu"><i class="bi bi-list"></i></button>
+      <div class="topbar-search">
+        <i class="bi bi-search"></i>
+        <input type="text" placeholder="Search reports..." aria-label="Search">
+      </div>
+      <div class="topbar-right">
+        <button class="icon-btn" aria-label="Notifications"><i class="bi bi-bell"></i><span class="dot"></span></button>
+        <div class="topbar-profile">
+          <div class="avatar-sm">AU</div>
+          <div class="info">
+            <div class="name">Admin User</div>
+            <div class="role">Administrator</div>
+          </div>
+        </div>
+      </div>
+    </header>
+      <main class="page-content">
+
+        <div class="page-head">
+          <div>
+            <h1>Reports &amp; Analytics</h1>
+            <div class="subtitle">Portfolio performance and lending insights.</div>
+          </div>
+          <div class="page-head-actions">
+            <button class="btn btn-outline" id="exportReportBtn"><i class="bi bi-download"></i> Export Report</button>
+          </div>
+        </div>
+
+        <div class="filter-pills" style="margin-bottom:20px;">
+          <button class="filter-pill" data-range="This Week">This Week</button>
+          <button class="filter-pill active" data-range="This Month">This Month</button>
+          <button class="filter-pill" data-range="This Quarter">This Quarter</button>
+          <button class="filter-pill" data-range="This Year">This Year</button>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-top"><div class="stat-icon"><i class="bi bi-briefcase"></i></div></div>
+            <div class="stat-label">Total Portfolio</div>
+            <div class="stat-value" id="statTotalPortfolio">₹0</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-top"><div class="stat-icon"><i class="bi bi-cash-stack"></i></div></div>
+            <div class="stat-label">Total Collected</div>
+            <div class="stat-value" id="statTotalCollected">₹0</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-top"><div class="stat-icon"><i class="bi bi-hourglass-split"></i></div></div>
+            <div class="stat-label">Outstanding</div>
+            <div class="stat-value" id="statOutstandingReport">₹0</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-top"><div class="stat-icon"><i class="bi bi-exclamation-triangle"></i></div></div>
+            <div class="stat-label">Default Rate</div>
+            <div class="stat-value" id="statDefaultRate">0%</div>
+          </div>
+        </div>
+
+        <div class="content-grid">
+          <div>
+            <div class="panel">
+              <div class="panel-head"><div><h2>Monthly Revenue</h2><div class="panel-sub">Collections trend, last 6 months</div></div></div>
+              <div class="panel-body"><div class="bar-chart" id="revenueChart"></div></div>
+            </div>
+            <div class="panel">
+              <div class="panel-head"><div><h2>Loan Disbursement</h2><div class="panel-sub">New loans disbursed per month (₹L)</div></div></div>
+              <div class="panel-body"><div class="bar-chart" id="disbursementChart"></div></div>
+            </div>
+            <div class="panel">
+              <div class="panel-head"><div><h2>Borrower Growth</h2><div class="panel-sub">Cumulative borrowers over time</div></div></div>
+              <div class="panel-body"><div class="bar-chart" id="borrowerGrowthChart"></div></div>
+            </div>
+          </div>
+          <div>
+            <div class="panel">
+              <div class="panel-head"><div><h2>Repayment Performance</h2><div class="panel-sub">Breakdown by payment status</div></div></div>
+              <div class="panel-body"><div class="hbar-list" id="repaymentPerformance"></div></div>
+            </div>
+            <div class="panel">
+              <div class="panel-head"><div><h2>Loan Type Distribution</h2><div class="panel-sub">Share of active loans by category</div></div></div>
+              <div class="panel-body"><div id="loanTypeDistribution"></div></div>
+            </div>
+          </div>
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <script src="js/app.js"></script>
+  <script src="js/reports.js"></script>
+</body>
+</html>

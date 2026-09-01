@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Active Loans · LendFlow</title>
+<meta name="description" content="Track disbursed loans, EMIs and outstanding balances.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <div class="brand-mark">LF</div>
+        <div class="brand-text">LEND<span>FLOW</span></div>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-section-label">MAIN</div>
+          <a href="index.html" class="nav-link"><i class="bi bi-speedometer2"></i><span>Dashboard</span></a>
+        <div class="nav-section-label">MANAGEMENT</div>
+          <a href="borrowers.html" class="nav-link"><i class="bi bi-people"></i><span>Borrowers</span></a>
+          <a href="applications.html" class="nav-link"><i class="bi bi-file-earmark-text"></i><span>Loan Applications</span></a>
+          <a href="loans.html" class="nav-link"><i class="bi bi-cash-coin"></i><span>Active Loans</span></a>
+          <a href="repayments.html" class="nav-link"><i class="bi bi-receipt"></i><span>Repayments</span></a>
+        <div class="nav-section-label">FINANCE</div>
+          <a href="transactions.html" class="nav-link"><i class="bi bi-arrow-left-right"></i><span>Transactions</span></a>
+          <a href="reports.html" class="nav-link"><i class="bi bi-bar-chart-line"></i><span>Reports</span></a>
+        <div class="nav-section-label">SYSTEM</div>
+          <a href="settings.html" class="nav-link"><i class="bi bi-gear"></i><span>Settings</span></a>
+      </nav>
+      <div class="sidebar-footer">
+        <div class="avatar">AU</div>
+        <div class="who">
+          <div class="name">Admin User</div>
+          <div class="role">Administrator</div>
+        </div>
+        <button class="logout-btn" title="Log out" aria-label="Log out"><i class="bi bi-box-arrow-right"></i></button>
+      </div>
+    </aside>
+    <div class="sidebar-overlay" data-menu-toggle></div>
+    <div class="main-area">
+    <header class="topbar">
+      <button class="menu-toggle" data-menu-toggle aria-label="Toggle menu"><i class="bi bi-list"></i></button>
+      <div class="topbar-search">
+        <i class="bi bi-search"></i>
+        <input type="text" placeholder="Search loans..." aria-label="Search">
+      </div>
+      <div class="topbar-right">
+        <button class="icon-btn" aria-label="Notifications"><i class="bi bi-bell"></i><span class="dot"></span></button>
+        <div class="topbar-profile">
+          <div class="avatar-sm">AU</div>
+          <div class="info">
+            <div class="name">Admin User</div>
+            <div class="role">Administrator</div>
+          </div>
+        </div>
+      </div>
+    </header>
+      <main class="page-content">
+
+        <div class="page-head">
+          <div>
+            <h1>Active Loans</h1>
+            <div class="subtitle">Track disbursed loans, EMIs and outstanding balances.</div>
+          </div>
+          <div class="page-head-actions">
+            <button class="btn btn-primary" id="addLoanBtn"><i class="bi bi-plus-lg"></i> Add Loan</button>
+          </div>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-top"><div class="stat-icon"><i class="bi bi-cash-coin"></i></div></div>
+            <div class="stat-label">Total Active Loans</div>
+            <div class="stat-value" id="statActiveLoans">0</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-top"><div class="stat-icon"><i class="bi bi-send-check"></i></div></div>
+            <div class="stat-label">Total Disbursed</div>
+            <div class="stat-value" id="statTotalDisbursed">₹0</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-top"><div class="stat-icon"><i class="bi bi-hourglass-split"></i></div></div>
+            <div class="stat-label">Outstanding</div>
+            <div class="stat-value" id="statOutstanding">₹0</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-top"><div class="stat-icon"><i class="bi bi-exclamation-triangle"></i></div></div>
+            <div class="stat-label">Overdue</div>
+            <div class="stat-value" id="statOverdueLoans">0</div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-head">
+            <div class="toolbar">
+              <div class="search-input">
+                <i class="bi bi-search"></i>
+                <input type="text" id="loanSearch" placeholder="Search loans...">
+              </div>
+              <div class="filter-pills">
+                <button class="filter-pill active" data-loan-filter="All">All</button>
+                <button class="filter-pill" data-loan-filter="Active">Active</button>
+                <button class="filter-pill" data-loan-filter="Completed">Completed</button>
+                <button class="filter-pill" data-loan-filter="Overdue">Overdue</button>
+                <button class="filter-pill" data-loan-filter="Paused">Paused</button>
+              </div>
+            </div>
+          </div>
+          <div class="panel-body no-pad">
+            <div class="table-scroll">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Loan ID</th><th>Borrower</th><th>Loan Type</th><th>Principal</th><th>Interest Rate</th>
+                    <th>Tenure</th><th>Monthly EMI</th><th>Outstanding</th><th>Next Due</th><th>Status</th><th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="loansBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Add Loan Modal -->
+        <div class="modal-backdrop" id="loanModal">
+          <div class="modal">
+            <div class="modal-head">
+              <h3>Add Loan</h3>
+              <button class="modal-close" data-modal-close aria-label="Close"><i class="bi bi-x-lg"></i></button>
+            </div>
+            <form id="loanForm" novalidate>
+              <div class="modal-body">
+                <div class="form-grid">
+                  <div class="form-group full">
+                    <label for="loanBorrowerSelect">Borrower</label>
+                    <select class="form-control" id="loanBorrowerSelect" name="borrower" required></select>
+                    <span class="error-text">Please select a borrower.</span>
+                  </div>
+                  <div class="form-group">
+                    <label for="loanTypeSelect">Loan Type</label>
+                    <select class="form-control" id="loanTypeSelect" name="loanType" required>
+                      <option value="Personal Loan">Personal Loan</option>
+                      <option value="Business Loan">Business Loan</option>
+                      <option value="Vehicle Loan">Vehicle Loan</option>
+                      <option value="Education Loan">Education Loan</option>
+                      <option value="Home Loan">Home Loan</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="startDate">Start Date</label>
+                    <input class="form-control" type="date" id="startDate" name="startDate" required>
+                    <span class="error-text">Start date is required.</span>
+                  </div>
+                  <div class="form-group">
+                    <label for="loanPrincipal">Principal Amount (₹)</label>
+                    <input class="form-control" type="number" id="loanPrincipal" name="principal" min="1" required>
+                    <span class="error-text">Enter a valid principal.</span>
+                  </div>
+                  <div class="form-group">
+                    <label for="loanRate">Interest Rate (% p.a.)</label>
+                    <input class="form-control" type="number" step="0.1" id="loanRate" name="rate" min="0" required>
+                    <span class="error-text">Enter a valid rate.</span>
+                  </div>
+                  <div class="form-group">
+                    <label for="loanTenure">Tenure (months)</label>
+                    <input class="form-control" type="number" id="loanTenure" name="tenure" min="1" required>
+                    <span class="error-text">Enter a valid tenure.</span>
+                  </div>
+                  <div class="form-group">
+                    <label for="frequency">Payment Frequency</label>
+                    <select class="form-control" id="frequency" name="frequency" required>
+                      <option value="Monthly">Monthly</option>
+                      <option value="Weekly">Weekly</option>
+                      <option value="Quarterly">Quarterly</option>
+                    </select>
+                  </div>
+                  <div class="form-group full">
+                    <label for="loanNotes">Notes <span class="hint">(optional)</span></label>
+                    <textarea class="form-control" id="loanNotes" name="notes"></textarea>
+                  </div>
+                  <div class="form-group full">
+                    <label class="mt-0">Estimated Repayment</label>
+                    <div class="emi-summary">
+                      <div class="emi-item"><div class="emi-label">Monthly EMI</div><div class="emi-value accent" id="emiPreview">₹0</div></div>
+                      <div class="emi-item"><div class="emi-label">Total Interest</div><div class="emi-value" id="emiInterest">₹0</div></div>
+                      <div class="emi-item"><div class="emi-label">Total Payable</div><div class="emi-value" id="emiTotal">₹0</div></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-foot">
+                <button type="button" class="btn btn-outline" data-modal-close>Cancel</button>
+                <button type="submit" class="btn btn-primary">Create Loan</button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <script src="js/app.js"></script>
+  <script src="js/loans.js"></script>
+</body>
+</html>

@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Borrowers · LendFlow</title>
+<meta name="description" content="Manage borrower profiles and loan relationships.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <div class="brand-mark">LF</div>
+        <div class="brand-text">LEND<span>FLOW</span></div>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-section-label">MAIN</div>
+          <a href="index.html" class="nav-link"><i class="bi bi-speedometer2"></i><span>Dashboard</span></a>
+        <div class="nav-section-label">MANAGEMENT</div>
+          <a href="borrowers.html" class="nav-link"><i class="bi bi-people"></i><span>Borrowers</span></a>
+          <a href="applications.html" class="nav-link"><i class="bi bi-file-earmark-text"></i><span>Loan Applications</span></a>
+          <a href="loans.html" class="nav-link"><i class="bi bi-cash-coin"></i><span>Active Loans</span></a>
+          <a href="repayments.html" class="nav-link"><i class="bi bi-receipt"></i><span>Repayments</span></a>
+        <div class="nav-section-label">FINANCE</div>
+          <a href="transactions.html" class="nav-link"><i class="bi bi-arrow-left-right"></i><span>Transactions</span></a>
+          <a href="reports.html" class="nav-link"><i class="bi bi-bar-chart-line"></i><span>Reports</span></a>
+        <div class="nav-section-label">SYSTEM</div>
+          <a href="settings.html" class="nav-link"><i class="bi bi-gear"></i><span>Settings</span></a>
+      </nav>
+      <div class="sidebar-footer">
+        <div class="avatar">AU</div>
+        <div class="who">
+          <div class="name">Admin User</div>
+          <div class="role">Administrator</div>
+        </div>
+        <button class="logout-btn" title="Log out" aria-label="Log out"><i class="bi bi-box-arrow-right"></i></button>
+      </div>
+    </aside>
+    <div class="sidebar-overlay" data-menu-toggle></div>
+    <div class="main-area">
+    <header class="topbar">
+      <button class="menu-toggle" data-menu-toggle aria-label="Toggle menu"><i class="bi bi-list"></i></button>
+      <div class="topbar-search">
+        <i class="bi bi-search"></i>
+        <input type="text" placeholder="Search borrowers, loans, applications..." aria-label="Search">
+      </div>
+      <div class="topbar-right">
+        <button class="icon-btn" aria-label="Notifications"><i class="bi bi-bell"></i><span class="dot"></span></button>
+        <div class="topbar-profile">
+          <div class="avatar-sm">AU</div>
+          <div class="info">
+            <div class="name">Admin User</div>
+            <div class="role">Administrator</div>
+          </div>
+        </div>
+      </div>
+    </header>
+      <main class="page-content">
+
+        <div class="page-head">
+          <div>
+            <h1>Borrowers</h1>
+            <div class="subtitle">Manage borrower profiles and loan relationships.</div>
+          </div>
+          <div class="page-head-actions">
+            <button class="btn btn-primary" id="addBorrowerBtn"><i class="bi bi-plus-lg"></i> Add Borrower</button>
+          </div>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-top"><div class="stat-icon"><i class="bi bi-people"></i></div></div>
+            <div class="stat-label">Total Borrowers</div>
+            <div class="stat-value" id="statTotalBorrowers">0</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-top"><div class="stat-icon"><i class="bi bi-person-check"></i></div></div>
+            <div class="stat-label">Active Borrowers</div>
+            <div class="stat-value" id="statActiveBorrowers">0</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-top"><div class="stat-icon"><i class="bi bi-person-plus"></i></div></div>
+            <div class="stat-label">New This Month</div>
+            <div class="stat-value" id="statNewBorrowers">0</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-top"><div class="stat-icon"><i class="bi bi-exclamation-triangle"></i></div></div>
+            <div class="stat-label">Outstanding Borrowers</div>
+            <div class="stat-value" id="statOverdueBorrowers">0</div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-head">
+            <div class="toolbar">
+              <div class="search-input">
+                <i class="bi bi-search"></i>
+                <input type="text" id="borrowerSearch" placeholder="Search borrowers...">
+              </div>
+              <div class="filter-pills">
+                <button class="filter-pill active" data-filter="All">All</button>
+                <button class="filter-pill" data-filter="Active">Active</button>
+                <button class="filter-pill" data-filter="Inactive">Inactive</button>
+                <button class="filter-pill" data-filter="Overdue">Overdue</button>
+              </div>
+            </div>
+          </div>
+          <div class="panel-body no-pad">
+            <div class="table-scroll">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Borrower</th><th>Contact</th><th>Loan Count</th><th>Total Borrowed</th>
+                    <th>Outstanding</th><th>Last Payment</th><th>Status</th><th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="borrowersBody"></tbody>
+              </table>
+            </div>
+            <div class="pagination">
+              <div class="page-info" id="borrowersPageInfo"></div>
+              <div class="page-btns" id="borrowersPageBtns"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Add / Edit Borrower Modal -->
+        <div class="modal-backdrop" id="borrowerModal">
+          <div class="modal">
+            <div class="modal-head">
+              <h3 id="borrowerModalTitle">Add Borrower</h3>
+              <button class="modal-close" data-modal-close aria-label="Close"><i class="bi bi-x-lg"></i></button>
+            </div>
+            <form id="borrowerForm" novalidate>
+              <div class="modal-body">
+                <div class="form-grid">
+                  <div class="form-group full">
+                    <label for="fullName">Full Name</label>
+                    <input class="form-control" type="text" id="fullName" name="fullName" required>
+                    <span class="error-text">Full name is required.</span>
+                  </div>
+                  <div class="form-group">
+                    <label for="phone">Phone</label>
+                    <input class="form-control" type="tel" id="phone" name="phone" required>
+                    <span class="error-text">Enter a valid phone number.</span>
+                  </div>
+                  <div class="form-group">
+                    <label for="email">Email</label>
+                    <input class="form-control" type="email" id="email" name="email" required>
+                    <span class="error-text">Enter a valid email address.</span>
+                  </div>
+                  <div class="form-group">
+                    <label for="dob">Date of Birth</label>
+                    <input class="form-control" type="date" id="dob" name="dob" required>
+                    <span class="error-text">Date of birth is required.</span>
+                  </div>
+                  <div class="form-group">
+                    <label for="occupation">Occupation</label>
+                    <input class="form-control" type="text" id="occupation" name="occupation" required>
+                    <span class="error-text">Occupation is required.</span>
+                  </div>
+                  <div class="form-group full">
+                    <label for="address">Address</label>
+                    <input class="form-control" type="text" id="address" name="address" required>
+                    <span class="error-text">Address is required.</span>
+                  </div>
+                  <div class="form-group">
+                    <label for="income">Monthly Income (₹)</label>
+                    <input class="form-control" type="number" id="income" name="income" min="0" required>
+                    <span class="error-text">Enter a valid income.</span>
+                  </div>
+                  <div class="form-group">
+                    <label for="employment">Employment Type</label>
+                    <select class="form-control" id="employment" name="employment" required>
+                      <option value="Salaried">Salaried</option>
+                      <option value="Self-Employed">Self-Employed</option>
+                      <option value="Business Owner">Business Owner</option>
+                      <option value="Unemployed">Unemployed</option>
+                    </select>
+                  </div>
+                  <div class="form-group full">
+                    <label for="notes">Notes <span class="hint">(optional)</span></label>
+                    <textarea class="form-control" id="notes" name="notes"></textarea>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-foot">
+                <button type="button" class="btn btn-outline" data-modal-close>Cancel</button>
+                <button type="submit" class="btn btn-primary">Save Borrower</button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <script src="js/app.js"></script>
+  <script src="js/borrowers.js"></script>
+</body>
+</html>
